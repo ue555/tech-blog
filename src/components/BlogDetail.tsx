@@ -1,5 +1,5 @@
-import React, {type ClassAttributes, type HTMLAttributes, useState} from 'react';
-import { Calendar, Clock, Tag, Bookmark, Heart, ChevronRight } from 'lucide-react';
+import React, {type ClassAttributes, type HTMLAttributes} from 'react';
+import { Calendar, Tag, ChevronRight } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import type { Components } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -34,18 +34,6 @@ const mdComponents: Partial<Components> = {
 };
 
 const BlogDetail: React.FC<BlogDetailProps> = ({ post, onBackClick }) => {
-  const [liked, setLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(post.likes);
-
-  const handleLike = () => {
-    // 競合しないように関数型アップデートで一貫させる
-    setLiked((prev) => {
-      const next = !prev;
-      setLikeCount((c) => c + (next ? 1 : -1));
-      return next;
-    });
-  };
-
   const markdown = (post.content?.trim() || post.excerpt || '').toString();
 
   return (
@@ -70,38 +58,12 @@ const BlogDetail: React.FC<BlogDetailProps> = ({ post, onBackClick }) => {
 
             <div className="flex items-center justify-between flex-wrap gap-4 mb-6">
               <div className="flex items-center">
-                <img
-                  src={post.authorAvatar}
-                  alt={post.author}
-                  className="w-12 h-12 rounded-full mr-3"
-                />
                 <div>
-                  <p className="font-medium text-gray-900">{post.author}</p>
                   <div className="flex items-center text-sm text-gray-500">
                     <Calendar className="w-4 h-4 mr-1" />
                     <span>{post.date}</span>
-                    <span className="mx-2">·</span>
-                    <Clock className="w-4 h-4 mr-1" />
-                    <span>{post.readTime}</span>
                   </div>
                 </div>
-              </div>
-
-              <div className="flex items-center space-x-3">
-                <button
-                  onClick={handleLike}
-                  className={`flex items-center space-x-1 px-4 py-2 rounded-full transition-colors ${
-                    liked
-                      ? 'bg-red-600 text-white'
-                      : 'bg-red-50 text-red-600 hover:bg-red-100'
-                  }`}
-                >
-                  <Heart className={`w-4 h-4 ${liked ? 'fill-current' : ''}`} />
-                  <span className="font-medium">{likeCount}</span>
-                </button>
-                <button className="p-2 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors">
-                  <Bookmark className="w-5 h-5 text-gray-700" />
-                </button>
               </div>
             </div>
 
@@ -131,7 +93,7 @@ const BlogDetail: React.FC<BlogDetailProps> = ({ post, onBackClick }) => {
           <div className="prose prose-lg max-w-none mb-12 prose-headings:scroll-mt-24 prose-a:underline-offset-2 prose-pre:rounded-xl">
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
-              // rehypePlugins={[rehypeHighlight]} // ←（任意）コードハイライト
+              // rehypePlugins={[rehypeHighlight]}
               components={mdComponents}
             >
               {markdown}
@@ -139,31 +101,6 @@ const BlogDetail: React.FC<BlogDetailProps> = ({ post, onBackClick }) => {
           </div>
 
           <div className="border-t pt-8">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-bold text-gray-900">コメント ({post.comments})</h3>
-              <button className="bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-700 transition-colors">
-                コメントを書く
-              </button>
-            </div>
-
-            <div className="space-y-6">
-              <div className="flex space-x-3">
-                <img
-                  src="https://api.dicebear.com/7.x/avataaars/svg?seed=comment1"
-                  alt="User"
-                  className="w-10 h-10 rounded-full"
-                />
-                <div className="flex-1">
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <p className="font-medium text-gray-900 mb-1">開発者A</p>
-                    <p className="text-gray-700 text-sm">
-                      とても参考になりました！実際のプロジェクトで試してみます。
-                    </p>
-                  </div>
-                  <p className="text-xs text-gray-500 mt-2">2時間前</p>
-                </div>
-              </div>
-            </div>
           </div>
         </article>
       </div>

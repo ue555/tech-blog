@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calendar, Clock, Tag, Bookmark, Heart, MessageCircle, ChevronRight } from 'lucide-react';
+import { Calendar, Tag, ChevronRight } from 'lucide-react';
 import type { BlogPost } from '../types/blog';
 
 interface BlogCardProps {
@@ -19,34 +19,15 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, onClick }) => {
           alt={post.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
         />
-        <div className="absolute top-4 right-4">
-          <button
-            className="bg-white/90 backdrop-blur p-2 rounded-full hover:bg-white transition-colors"
-            onClick={(e) => {
-              e.stopPropagation();
-              console.log('Bookmarked:', post.id);
-            }}
-          >
-            <Bookmark className="w-4 h-4 text-gray-700" />
-          </button>
-        </div>
       </div>
 
       <div className="p-5">
         <div className="flex items-center mb-3">
-          <img
-            src={post.authorAvatar}
-            alt={post.author}
-            className="w-8 h-8 rounded-full mr-2"
-          />
           <div className="flex-1">
-            <p className="text-sm font-medium text-gray-900">{post.author}</p>
             <div className="flex items-center text-xs text-gray-500">
               <Calendar className="w-3 h-3 mr-1" />
               <span>{post.date}</span>
               <span className="mx-2">·</span>
-              <Clock className="w-3 h-3 mr-1" />
-              <span>{post.readTime}</span>
             </div>
           </div>
         </div>
@@ -73,14 +54,6 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, onClick }) => {
 
         <div className="flex items-center justify-between text-sm text-gray-500">
           <div className="flex items-center space-x-4">
-            <span className="flex items-center">
-              <Heart className="w-4 h-4 mr-1" />
-              {post.likes}
-            </span>
-            <span className="flex items-center">
-              <MessageCircle className="w-4 h-4 mr-1" />
-              {post.comments}
-            </span>
           </div>
           <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-blue-600 transition-colors" />
         </div>

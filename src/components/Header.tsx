@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, Menu, X } from 'lucide-react';
+import { Search } from 'lucide-react';
 
 interface HeaderProps {
   onHomeClick: () => void;
@@ -7,7 +7,7 @@ interface HeaderProps {
   setMobileMenuOpen: (open: boolean) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ onHomeClick, mobileMenuOpen, setMobileMenuOpen }) => {
+const Header: React.FC<HeaderProps> = ({ onHomeClick, mobileMenuOpen }) => {
   return (
     <header className="bg-white border-b sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4">
@@ -35,15 +35,6 @@ const Header: React.FC<HeaderProps> = ({ onHomeClick, mobileMenuOpen, setMobileM
                 className="bg-transparent outline-none text-sm w-48"
               />
             </div>
-            <button className="hidden md:block bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-700 transition-colors">
-              記事を書く
-            </button>
-            <button
-              className="md:hidden"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
           </div>
         </div>
       </div>
@@ -63,9 +54,6 @@ const Header: React.FC<HeaderProps> = ({ onHomeClick, mobileMenuOpen, setMobileM
             <a className="block py-2 text-gray-700">カテゴリー</a>
             <a className="block py-2 text-gray-700">タグ</a>
           </nav>
-          <button className="w-full bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-medium">
-            記事を書く
-          </button>
         </div>
       )}
     </header>
