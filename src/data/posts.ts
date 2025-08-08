@@ -284,6 +284,11 @@ BREAKING CHANGE: この変更により、既存のAPIトークンはすべて無
 Conventional Commitsは、チーム開発におけるコミュニケーションを円滑にし、リリース作業を自動化するためのシンプルで強力な規約です。最初は少し面倒に感じるかもしれませんが、チーム全体で取り組むことで、その恩恵は計り知れません。
 
 ぜひ、次のプロジェクトから導入を検討してみてはいかがでしょうか？
+
+#### **参考元**
+
+- [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
+- [Conventional Commits(日本語訳)](https://www.conventionalcommits.org/ja/v1.0.0/)
 `,
     date: "2025-08-09",
     tags: ["Git"],
