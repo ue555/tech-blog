@@ -15,7 +15,6 @@ interface BlogDetailProps {
 
 class ExtraProp {
 }
-//TODO code: ({inline, className, children, ...props} :ClassAttributes<HTMLElement> & HTMLAttributes<HTMLElement> & ExtraProp) type error
 const mdComponents: Partial<Components> = {
   a: (props) => <a {...props} target="_blank" rel="noopener noreferrer"/>,
   code: ({inline, className, children, ...props}: ClassAttributes<HTMLElement> & HTMLAttributes<HTMLElement> & ExtraProp & { inline?: boolean }) =>
