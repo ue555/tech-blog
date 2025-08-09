@@ -4,9 +4,8 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [ main ]
-  workflow_dispatch:
+  workflow_dispatch: { }
 
-# gh-pagesブランチへpushするので必要
 permissions:
   contents: write
 
