@@ -17,3 +17,11 @@ npx tailwindcss init -p
 npm run dev
 ```
 
+#### GitHub Action and Pages Deploy
+
+```bash
+# Manual deployment method(Trigger with empty commit)
+git commit --allow-empty -m "chore: trigger workflow after secret update"
+git push origin main
+```
+
