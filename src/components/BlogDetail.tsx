@@ -18,7 +18,7 @@ class ExtraProp {
 //TODO code: ({inline, className, children, ...props} :ClassAttributes<HTMLElement> & HTMLAttributes<HTMLElement> & ExtraProp) type error
 const mdComponents: Partial<Components> = {
   a: (props) => <a {...props} target="_blank" rel="noopener noreferrer"/>,
-  code: ({inline, className, children, ...props} :ClassAttributes<HTMLElement> & HTMLAttributes<HTMLElement> & ExtraProp) =>
+  code: ({inline, className, children, ...props}: ClassAttributes<HTMLElement> & HTMLAttributes<HTMLElement> & ExtraProp & { inline?: boolean }) =>
     inline ? (
       <code className="px-1 py-0.5 rounded bg-gray-100" {...props}>
         {children}
