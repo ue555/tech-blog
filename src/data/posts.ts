@@ -7,7 +7,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       "Vimをマスターするための実践コマンド集：移動から高度な編集テクニックまで",
     content: `
-## はじめに
+### はじめに
 
 Vimは、その独特な操作方法と急な学習曲線から敬遠されがちなテキストエディタです。しかし、一度その哲学と強力なコマンド体系を身につければ、コーディングの速度と効率は劇的に向上します。この記事では、あなたのVimスキルを次のレベルへ引き上げるための、基本的な移動から高度な編集、カスタマイズまでを網羅した実践的なコマンドを紹介します。
 
@@ -171,7 +171,7 @@ Vimでは、複数のファイルを同時に開いて効率的に作業する�
 
 ---------
 
-## まとめ
+### まとめ
 
 今回紹介したコマンドは、Vimの持つ膨大な機能のほんの一部に過ぎません。しかし、これらの基本的な「文法」をマスターするだけで、あなたのテキスト編集は間違いなく別次元の体験になるはずです。
 
@@ -188,6 +188,8 @@ Vimの道は一日にしてならず。日々のコーディングの中で少�
     excerpt:
       "脱・カオスなGitログ！Conventional Commits入門で共同開発をスムーズに",
     content: `
+### はじめに
+
 「このコミット、何のためにやったんだっけ…？」「リリースノートを作るのが大変…」
 
 チーム開発でGitを使っていると、コミットログが分かりにくく、後から追いかけるのが困難になることはありませんか？そんな悩みを解決するのが、今回紹介する Conventional Commits というコミットメッセージの規約です。
@@ -279,7 +281,7 @@ BREAKING CHANGE: この変更により、既存のAPIトークンはすべて無
 - ✅ **セマンティックバージョニングの自動化**: **fix** はパッチバージョン、**feat** はマイナーバージョン、**BREAKING CHANGE** はメジャーバージョンの更新に機械的につなげられます。
 - ✅ **円滑なレビュー**: レビュアーはコミットの種別を見るだけで、変更の目的を素早く把握できます。
 
-## まとめ
+### まとめ
 
 Conventional Commitsは、チーム開発におけるコミュニケーションを円滑にし、リリース作業を自動化するためのシンプルで強力な規約です。最初は少し面倒に感じるかもしれませんが、チーム全体で取り組むことで、その恩恵は計り知れません。
 
@@ -294,5 +296,156 @@ Conventional Commitsは、チーム開発におけるコミュニケーション
     tags: ["Git"],
     imageUrl:
       "images/blog2.png",
+  },
+  {
+    id: 3,
+    title: "React (Vite)アプリをGitHub Pagesに自動デプロイする完全ガイド 🚀",
+    excerpt:
+      "React (Vite)アプリをGitHub Pagesに自動デプロイする完全ガイド 🚀",
+    content: `
+### はじめに
+
+Reactで作成したポートフォリオや個人プロジェクトを、無料で全世界に公開したいと思ったことはありませんか？ **GitHub Pages** と **GitHub Actions** を組み合わせることで、main ブランチにプッシュするだけで、ビルドからデプロイまでを全自動で行う、いわゆるCI/CDパイプラインを簡単に構築できます。
+
+この記事では、Viteで作成したReactアプリケーションをGitHub Pagesにデプロイするための設定手順を、ステップバイステップで詳しく解説します。
+
+---------
+
+### ステップ1: Viteプロジェクトの設定
+
+まず、デプロイ先のURLに合わせてViteの設定を更新します。**GitHub PagesのURLは https://<ユーザー名>.github.io/<リポジトリ名>/** となるため、アセット（CSSや画像ファイル）のパスを正しく解決できるよう、**base** オプションにリポジトリ名を設定する必要があります。
+
+**vite.config.js** を開き、以下のように base プロパティを追加してください。
+
+\`\`\`bash
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+  plugins: [react()],
+  // ここにリポジトリ名を設定
+  base: '/your-repository-name/',
+  build: {
+    outDir: 'dist',
+    sourcemap: false
+  }
+})
+\`\`\`
+**your-repository-name** の部分は、ご自身のGitHubリポジトリ名に置き換えてください。
+
+---------
+
+### ステップ2: GitHub Actionsワークフローの作成
+
+次に、デプロイを自動化するためのワークフローを作成します。プロジェクトのルートに **.github/workflows/** というディレクトリを作成し、その中に **deploy.yml** という名前でファイルを作成します。
+
+\`\`\`bash
+# ワークフローの名前
+name: Deploy to GitHub Pages
+
+# ワークフローが実行されるタイミング
+on:
+  push:
+    branches: [ main ] # mainブランチにプッシュされた時
+  workflow_dispatch: { } # 手動で実行できるようにする
+
+# ワークフローに必要な権限
+permissions:
+  contents: write
+
+# 同じグループのワークフローが同時に実行されないようにする
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. リポジトリのソースコードをチェックアウト
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2. Node.js環境をセットアップ
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20 # プロジェクトに合わせたバージョンを指定
+          cache: npm
+
+      # 3. 依存関係をインストール
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. アプリケーションをビルド
+      - name: Build
+        run: npm run build
+
+      # 5. ビルド成果物をgh-pagesブランチにデプロイ
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: \${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+\`\`\`
+
+この設定ファイルは、**main** ブランチにコードがプッシュされるたびに、以下の処理を自動で実行します。
+1.ソースコードを取得
+2.Node.js環境を準備
+3.**npm ci** で依存関係をインストール
+4.**npm run build** でプロジェクトをビルド
+5.ビルドで生成された **dist** ディレクトリの中身を **gh-pages** ブランチにプッシュ
+
+---------
+
+### ステップ3: GitHub Pagesの有効化
+
+最後に、GitHubリポジトリ側でGitHub Pagesを有効にします。
+1.リポジトリのページで **「Settings」** タブをクリックします。
+2.左のサイドバーから **「Pages」** を選択します。
+3.「Build and deployment」の「Source」セクションで、**「Deploy from a branch」** を選択します。
+4.「Branch」セクションで、ブランチを **gh-pages** に、フォルダを **/ (root)** に設定して **「Save」** をクリックします。
+
+**gh-pages** ブランチは、最初のワークフロー実行時に自動で作成されるため、この時点ではまだ存在しなくても問題ありません。
+
+これで全ての設定は完了です！mainブランチに何か変更を加えてプッシュすると、GitHub Actionsが自動的に起動し、数分後には **https://<ユーザー名>.github.io/<リポジトリ名>/** でサイトが公開されます。
+
+--------
+
+### （応用）環境変数の利用方法
+
+メンテナンスモードの切り替えなど、ビルド時に外部から値を渡したい場合は、GitHubの Secrets 機能が便利です。
+1.リポジトリの **「Settings」 → 「Secrets and variables」 → 「Actions」** を開きます。
+2.**「New repository secret」** ボタンをクリックし、新しいSecret（例: **VITE_MAINTENANCE_MODE**）を作成します。
+3.**deploy.yml** のビルドステップに **env** を追加して、Secretを環境変数として渡します。
+\`\`\`yaml
+ - name: Build with environment variables
+        run: npm run build
+        env:
+          VITE_MAINTENANCE_MODE: \${{ secrets.VITE_MAINTENANCE_MODE }}
+\`\`\`
+これで、Viteのコード内 ( **import.meta.env.VITE_MAINTENANCE_MODE** ) でこの値を利用できるようになります。
+
+--------
+
+### トラブルシューティング
+
+エラー: **remote: Permission to ... denied to github-actions[bot]**
+
+このエラーは、ワークフローが **gh-pages** ブランチにプッシュするための権限が不足している場合に発生します。**deploy.yml** の先頭に、適切な **permissions** が設定されているか確認してください。
+\`\`\`yaml
+permissions:
+  contents: write # リポジトリへの書き込み権限
+\`\`\`
+
+--------
+### まとめ
+
+これであなたも、モダンなフロントエンド開発の第一歩である自動デプロイ環境を手に入れました。ぜひ活用してみてください！
+`,
+    date: "2025-08-10",
+    tags: ["Github Pages"],
+    imageUrl:
+      "images/blog3.png",
   },
 ];
