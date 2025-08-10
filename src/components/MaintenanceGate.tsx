@@ -1,8 +1,7 @@
 import React from "react";
 
-type Props = { children: React.ReactNode };
-
-export default function MaintenanceGate({ children }: Props) {
+interface Props { children: React.ReactNode }
+const MaintenanceGate:React.FC<Props> = ({ children }) => {
   const maintenance = import.meta.env.VITE_MAINTENANCE_MODE === "true";
 
   if (maintenance) {
@@ -22,3 +21,5 @@ export default function MaintenanceGate({ children }: Props) {
 
   return <>{children}</>;
 }
+
+export default MaintenanceGate;
