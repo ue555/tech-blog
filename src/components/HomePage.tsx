@@ -13,7 +13,7 @@ const HomePage: React.FC<HomePageProps> = ({ posts, onPostClick }) => {
       <div className="max-w-6xl mx-auto px-4 py-8">
         <div className="mb-8 animate-slide-up">
           <h2 className="text-3xl font-bold text-gray-900 mb-2">最新の記事</h2>
-          <p className="text-gray-600">エンジニアリングの最新トレンドと技術情報</p>
+          <p className="text-gray-600">気になった技術の最新トレンドとアウトプットした技術情報</p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -22,11 +22,12 @@ const HomePage: React.FC<HomePageProps> = ({ posts, onPostClick }) => {
           ))}
         </div>
 
-        <div className="mt-12 flex justify-center">
+        {/* TODO ブログの数が増えたら、少しづつ表示するようにする */}
+        {/*<div className="mt-12 flex justify-center">
           <button className="bg-white border border-gray-300 text-gray-700 px-6 py-3 rounded-full hover:bg-gray-50 transition-colors">
             もっと見る
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

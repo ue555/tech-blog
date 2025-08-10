@@ -19,14 +19,16 @@ const Header: React.FC<HeaderProps> = ({ onHomeClick, mobileMenuOpen }) => {
             >
               TechBlog
             </h1>
-            <nav className="hidden md:flex space-x-6">
+
+            {/* TODO 必要に応じて、メニューを増やす */}
+            {/*<nav className="hidden md:flex space-x-6">
               <a className="text-gray-700 hover:text-blue-600 cursor-pointer transition-colors">トレンド</a>
               <a className="text-gray-700 hover:text-blue-600 cursor-pointer transition-colors">カテゴリー</a>
               <a className="text-gray-700 hover:text-blue-600 cursor-pointer transition-colors">タグ</a>
-            </nav>
+            </nav>*/}
           </div>
-
-          <div className="flex items-center space-x-4">
+          {/* TODO 検索機能を実装後、コメントアウトを解除 */}
+          {/*<div className="flex items-center space-x-4">
             <div className="hidden md:flex items-center bg-gray-100 rounded-full px-4 py-2">
               <Search className="w-4 h-4 text-gray-500 mr-2" />
               <input
@@ -35,7 +37,7 @@ const Header: React.FC<HeaderProps> = ({ onHomeClick, mobileMenuOpen }) => {
                 className="bg-transparent outline-none text-sm w-48"
               />
             </div>
-          </div>
+          </div>*/}
         </div>
       </div>
 
