@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
 interface Props { children: React.ReactNode }
 const MaintenanceGate:React.FC<Props> = ({ children }) => {
-  const maintenance = import.meta.env.VITE_MAINTENANCE_MODE === "true";
+  const maintenance = import.meta.env.VITE_MAINTENANCE_MODE === 'true';
 
   if (maintenance) {
     return (
