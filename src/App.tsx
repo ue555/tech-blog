@@ -25,7 +25,7 @@ function App() {
           setCurrentPage('notfound');
           setSelectedPost(null);
         }
-      } else if (/^(#)?$/.test(hash)) {
+      } else if (/^https?:\/\/[^/]+\/tech-blog\/(?:#\/?)?$/.test(window.location.href)) {
         setCurrentPage('home');
         setSelectedPost(null);
       } else {
@@ -54,6 +54,11 @@ function App() {
 
   let content;
   if (currentPage === 'home') {
+    history.replaceState(
+      null,
+      '',
+      window.location.href.replace(/(\/tech-blog\/).*/, '$1')
+    );
     content = <HomePage posts={blogPosts} onPostClick={handlePostClick}/>;
   } else if (currentPage === 'detail' && selectedPost) {
     content = <BlogDetail post={selectedPost} onBackClick={handleHomeClick}/>;
