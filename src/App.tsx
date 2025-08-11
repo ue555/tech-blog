@@ -50,15 +50,15 @@ function App() {
     setCurrentPage('home');
     setSelectedPost(null);
     window.location.hash = '';
-  };
-
-  let content;
-  if (currentPage === 'home') {
     history.replaceState(
       null,
       '',
       window.location.href.replace(/(\/tech-blog\/).*/, '$1')
     );
+  };
+
+  let content;
+  if (currentPage === 'home') {
     content = <HomePage posts={blogPosts} onPostClick={handlePostClick}/>;
   } else if (currentPage === 'detail' && selectedPost) {
     content = <BlogDetail post={selectedPost} onBackClick={handleHomeClick}/>;
