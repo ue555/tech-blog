@@ -88,10 +88,10 @@ describe('useRouting', () => {
 
     expect(result.current.currentPage).toBe('home');
     expect(result.current.selectedPost).toBeNull();
-    expect(window.location.hash).toBe(''); // 空にされる
+    expect(window.location.hash).toBe('');
 
     expect(spy).toHaveBeenCalled();
-    const newUrl = (spy.mock.calls.at(-1) ?? [])[2] as string;
+    const newUrl = (spy.mock.calls.at(-1) ?? [])[2] as string; // array result ['state', 'title', 'url'],array [2] => Third argument (URL)
     expect(newUrl).toBe('http://localhost/tech-blog/');
   });
 
